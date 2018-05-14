@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   as :admin do
   	get 'env' => 'products#env'
   end
-
+  
+  resources :buckets
   resources :products
 end
