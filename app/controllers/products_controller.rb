@@ -3,7 +3,7 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.where(news: false)
+    @products = Product.where(news: false).order(created_at: :desc)
 
     render json: @products
   end
@@ -21,6 +21,7 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
+    UserMailer.welcome_email().deliver_now
     @product = Product.create!(product_params)
     @product.images.map! do |x|
       a = x.split('/')
@@ -64,6 +65,6 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.permit(:title, :description, :category, :news, :amount, :images => [])
+      params.permit(:title, :description, :category, :news, :price, :amount, :images => [])
     end
 end
