@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   get 'products2' => 'products#index2'
   resources :buckets
   resources :products
+  resources :orders
 end
