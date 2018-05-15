@@ -1,5 +1,5 @@
 class BucketsController < ApplicationController
-  before_action :set_bucket, only: [:update, :destroy]
+  before_action :set_bucket, only: [:show, :update, :update2 ,:delFromBucket, :destroy]
 
   # GET /buckets
   def index
@@ -9,10 +9,19 @@ class BucketsController < ApplicationController
   end
 
   # GET /buckets/1
-  def show
-    @bucket = Bucket.find_by(user_id: bucket_params['id'])
-    print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@#{@bucket}"
-    render json: @bucket
+  def show  
+    x = []
+    @bucket.product_id.each do |key, value|
+      if Product.exists?(id: key)
+        b = Product.find(key)
+        c = {product: b, number:value}
+        x << c
+      else
+        @bucket.product_id.delete(key)
+        @bucket.save
+      end
+    end
+    render json: x
   end
 
   # POST /buckets
@@ -20,7 +29,18 @@ class BucketsController < ApplicationController
     @bucket = Bucket.new(bucket_params)
 
     if @bucket.save
-      render json: @bucket, status: :created, location: @bucket
+      x = []
+      @bucket.product_id.each do |key, value|
+        if Product.exists?(id: key)
+          b = Product.find(key)
+          c = {product: b, number:value}
+          x << c
+        else
+          @bucket.product_id.delete(key)
+          @bucket.save
+        end
+      end
+      render json: x
     else
       render json: @bucket.errors, status: :unprocessable_entity
     end
@@ -28,11 +48,67 @@ class BucketsController < ApplicationController
 
   # PATCH/PUT /buckets/1
   def update
-    if @bucket.update(bucket_params)
-      render json: @bucket
+    if @bucket.product_id[bucket_params['product_id'].to_s]
+
+      @bucket.product_id[bucket_params['product_id'].to_s] = @bucket.product_id[bucket_params['product_id'].to_s] + 1
+    else
+      @bucket.product_id[bucket_params['product_id'].to_s] = 1
+    end
+
+    if @bucket.save
+      x = []
+      @bucket.product_id.each do |key, value|
+        if Product.exists?(id: key)
+          b = Product.find(key)
+          c = {product: b, number:value}
+          x << c
+        else
+          @bucket.product_id.delete(key)
+          @bucket.save
+        end
+      end
+      render json: x
     else
       render json: @bucket.errors, status: :unprocessable_entity
     end
+  end
+
+  def update2
+    @bucket.product_id[bucket_params['product_id'].to_s] = @bucket.product_id[bucket_params['product_id'].to_s] - 1
+
+    if @bucket.save
+      x = []
+      @bucket.product_id.each do |key, value|
+       if Product.exists?(id: key)
+          b = Product.find(key)
+          c = {product: b, number:value}
+          x << c
+        else
+          @bucket.product_id.delete(key)
+          @bucket.save
+        end
+      end
+      render json: x
+    else
+      render json: @bucket.errors, status: :unprocessable_entity
+    end
+  end
+
+  def delFromBucket
+    @bucket.product_id.delete(bucket_params['product_id'].to_s)
+    @bucket.save
+    x = []
+    @bucket.product_id.each do |key, value|
+      if Product.exists?(id: key)
+          b = Product.find(key)
+          c = {product: b, number:value}
+          x << c
+        else
+          @bucket.product_id.delete(key)
+          @bucket.save
+        end
+    end
+    render json: x
   end
 
   # DELETE /buckets/1
@@ -43,7 +119,7 @@ class BucketsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bucket
-      @bucket = Bucket.find(params[:id])
+      @bucket = Bucket.find_by(user_id: bucket_params['id'])
     end
 
     # Only allow a trusted parameter "white list" through.

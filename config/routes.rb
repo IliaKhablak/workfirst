@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   as :admin do
   	get 'env' => 'products#env'
   end
-  
+  post 'buckets/:id' => 'buckets#update'
+  post 'buckets2/:id' => 'buckets#update2'
+  post 'delFromBucket/:id' => 'buckets#delFromBucket'
   resources :buckets
   resources :products
 end
