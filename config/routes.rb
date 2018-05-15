@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   post 'buckets/:id' => 'buckets#update'
   post 'buckets2/:id' => 'buckets#update2'
   post 'delFromBucket/:id' => 'buckets#delFromBucket'
+  get 'products2' => 'products#index2'
   resources :buckets
   resources :products
 end

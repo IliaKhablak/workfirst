@@ -3,7 +3,13 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
+    @products = Product.where(news: false)
+
+    render json: @products
+  end
+
+  def index2
+    @products = Product.where(news: true)
 
     render json: @products
   end
@@ -58,6 +64,6 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.permit(:title, :description, :category, :amount, :images => [])
+      params.permit(:title, :description, :category, :news, :amount, :images => [])
     end
 end
