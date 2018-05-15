@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
   end
 
   def index2
-    @products = Product.where(news: true)
+    @products = Product.where(news: true).order(created_at: :desc)
 
     render json: @products
   end
