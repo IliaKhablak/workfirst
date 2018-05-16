@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   post 'remProd' => 'orders#remProd'
   post 'delProd' => 'orders#delProd'
   get 'cleanbucket/:id' => 'buckets#cleanbucket'
+  post 'mailerb' => 'buckets#mailerb'
 end

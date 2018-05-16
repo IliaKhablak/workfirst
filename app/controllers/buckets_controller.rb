@@ -117,6 +117,10 @@ class BucketsController < ApplicationController
     @bucket.save
   end
 
+  def mailerb
+    UserMailer.welcome_email(bucket_params['tutle'],bucket_params['milo'],bucket_params['name'],bucket_params['text']).deliver_now
+  end
+
   # DELETE /buckets/1
   def destroy
     @bucket.destroy
@@ -130,6 +134,6 @@ class BucketsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def bucket_params
-      params.permit(:user_id, :product_id, :id)
+      params.permit(:user_id, :product_id, :id, :tutle, :milo, :name, :text)
     end
 end

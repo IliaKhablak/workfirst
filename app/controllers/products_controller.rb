@@ -21,7 +21,7 @@ class ProductsController < ApplicationController
 
   # POST /products
   def create
-    UserMailer.welcome_email().deliver_now
+    
     @product = Product.create!(product_params)
     @product.images.map! do |x|
       a = x.split('/')

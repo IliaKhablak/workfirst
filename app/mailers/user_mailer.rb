@@ -1,6 +1,8 @@
 class UserMailer < ApplicationMailer
 
-	def welcome_email()
-	    mail(to: 'apella2010@gmail.com', subject: 'Welcome to My Awesome Site')
+	def welcome_email(title,email,name,text)
+		@name = name
+		@text = text
+	    mail(to: 'apella2010@gmail.com', subject: title)
 	  end
 end
