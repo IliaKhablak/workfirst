@@ -111,6 +111,12 @@ class BucketsController < ApplicationController
     render json: x
   end
 
+  def cleanbucket
+    @bucket = Bucket.find_by(user_id: bucket_params['id'])
+    @bucket.product_id = {}
+    @bucket.save
+  end
+
   # DELETE /buckets/1
   def destroy
     @bucket.destroy

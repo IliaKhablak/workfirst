@@ -12,4 +12,8 @@ Rails.application.routes.draw do
   resources :buckets
   resources :products
   resources :orders
+  post 'addProd' => 'orders#addProd'
+  post 'remProd' => 'orders#remProd'
+  post 'delProd' => 'orders#delProd'
+  get 'cleanbucket/:id' => 'buckets#cleanbucket'
 end

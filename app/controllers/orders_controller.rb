@@ -43,6 +43,38 @@ class OrdersController < ApplicationController
     end
   end
 
+  def addProd
+    @order = Order.find(order_params['id'])
+    @order.product_id[order_params['product_id'].to_s] = @order.product_id[order_params['product_id'].to_s] + 1
+    a = Product.find(order_params['product_id'])
+    @order.price = @order.price + a.price
+   
+    if @order.save
+      render json: @order
+    end
+  end
+
+  def remProd
+    @order = Order.find(order_params['id'])
+    @order.product_id[order_params['product_id'].to_s] = @order.product_id[order_params['product_id'].to_s] - 1
+    a = Product.find(order_params['product_id'])
+    @order.price = @order.price - a.price
+   
+    if @order.save
+      render json: @order
+    end
+  end
+
+  def delProd
+    @order = Order.find(order_params['id'])
+    a = Product.find(order_params['product_id'])
+    @order.price = @order.price - a.price*@order.product_id[order_params['product_id'].to_s]
+    @order.product_id.delete(order_params['product_id'].to_s)
+    if @order.save
+      render json: @order
+    end
+  end
+
   # PATCH/PUT /orders/1
   def update
     if @order.update(order_params)
@@ -65,6 +97,6 @@ class OrdersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.permit(:user_id, :user_email, :adress, :price, :kontakt_phone, :id, :condition)
+      params.permit(:user_id, :user_email, :adress, :price, :kontakt_phone, :id, :condition, :product_id)
     end
 end
