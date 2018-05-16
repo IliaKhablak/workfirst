@@ -3,16 +3,16 @@ class ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.where(news: false).order(created_at: :desc)
+    @products = Product.all
 
     render json: @products
   end
 
-  def index2
-    @products = Product.where(news: true).order(created_at: :desc)
+  # def index2
+  #   @products = Product.where(news: true).order(created_at: :desc)
 
-    render json: @products
-  end
+  #   render json: @products
+  # end
 
   # GET /products/1
   def show
