@@ -57,16 +57,16 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :sendmail
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  # config.action_mailer.default_options = {from: 'testairbnb111@gmail.com'}
+  config.action_mailer.default_options = {from: 'testairbnb111@gmail.com'}
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-  :user_name => 'dac36565918d31',
-  :password => '23465631bc0f02',
-  :address => 'smtp.mailtrap.io',
-  :domain => 'smtp.mailtrap.io',
-  :port => '2525',
-  :authentication => :cram_md5
-}
+  address:              'smtp.gmail.com',
+  port:                 587,
+  domain:               'example.com',
+  user_name:            'testairbnb111@gmail.com',
+  password:             ENV['Gpas'],
+  authentication:       'plain',
+  enable_starttls_auto: true  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
