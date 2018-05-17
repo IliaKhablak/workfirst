@@ -22,6 +22,7 @@ gem 'devise_token_auth'
 gem 'omniauth'
 gem 'rack-cors', :require => 'rack/cors'
 gem "figaro"
+gem 'sendgrid-ruby'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
