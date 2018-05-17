@@ -16,9 +16,6 @@ class OrdersController < ApplicationController
   # POST /orders
   def create
     @bucket = Bucket.find_by(user_id: order_params['user_id'])
-    if User.exists?(id: order_params['id'])
-      @user = User.find(order_params['id'])
-    end
     @order = Order.new(order_params)
     if !order_params['user_email'] 
       @order.user_email = @user.email
