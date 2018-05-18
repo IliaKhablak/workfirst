@@ -54,8 +54,6 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "newappr_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
-  config.action_mailer.delivery_method = :sendmail
-  config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_options = {from: 'testairbnb111@gmail.com'}
   config.action_mailer.delivery_method = :smtp
