@@ -1,9 +1,14 @@
 Поступил новый заказ на сумму: <%= @order.price%>р. 
+<br>
+Номер заказа: <%=@order.id%>
+<br>
 Телефон для связи: <%= @order.kontakt_phone%>
+<br>
 <% a = 1 %>
-<% @x.each do |z|%>
-<% n = z.product %>
-<%=a%>   <%= n.title%>     <%=z.number%>шт на сумму: <%=n.price*z.number%>
+<% @bla.each do |z|%>
+<br>
+<%=a%>   <%= z[0].title%>     <%=z[1]%>шт на сумму: <%=z[0].price*z[1]%>руб.
+<br>
 <% a+=1%>
 <%end%> 
 Подробности на сайте в разделе заказы.

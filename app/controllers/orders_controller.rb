@@ -34,7 +34,8 @@ class OrdersController < ApplicationController
           @order.save
         end
       end
-      # UserMailer.mailTo(@order.id,x).deliver_now
+      UserMailer.mailTo(@order.id).deliver_now
+      UserMailer.mailToClient(@order.id).deliver_now
       render json: x
     else
       render json: @order.errors, status: :unprocessable_entity
